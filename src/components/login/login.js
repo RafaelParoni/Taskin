@@ -4,6 +4,11 @@ import {collection, getDocs, getFirestore } from "firebase/firestore";
 import { useState } from "react";
 import bcrypt from "bcryptjs-react";
 
+import './styleLogin.css'
+import TitleLogin from "./components/Title";
+import {LuEye, LuEyeOff, LuAlertTriangle, LuMailWarning, LuShieldQuestion} from 'react-icons/lu'
+
+
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyCBBq1IMmZ_X-PdVaUlmLNr6kqOFXQQQ54",
   authDomain: "reactfirebase-664f2.firebaseapp.com",
@@ -15,6 +20,11 @@ const firebaseApp = initializeApp({
 });
 
 function LoginPage() {
+
+    var AlertSpan = document.getElementById('FormIncorrectPassEmail')
+    var EmailRequire = document.getElementById('FormRequireEmail')
+    var PasswordRequire = document.getElementById('FormRequirePassword')
+
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -41,16 +51,15 @@ function LoginPage() {
 
 
     async function Login(){  //npm i bcryptjs
-        if(email === ''){
-            alert('Coloque um Email!')
-            return
-        }
-        if(password === ''){
-            alert('Coloque uma Senha!')
-            return
-        }
-  
-        verifiqueEmail()
+      if(email === ''){
+          EmailRequire.style.display = 'flex'
+          return
+      }
+      if(password === ''){
+          PasswordRequire.style.display = 'flex'
+          return
+      }
+      verifiqueEmail()
     }
 
     async function verifiqueEmail(){
@@ -69,6 +78,7 @@ function LoginPage() {
         }
         if(i === userss.length){
             console.log('nenhum email encontrado')
+            AlertSpan.style.display = 'flex'
         }
     }
 
@@ -81,27 +91,45 @@ function LoginPage() {
             window.localStorage.setItem('name', user.name)
             window.localStorage.setItem('email', email)
             window.localStorage.setItem('password', passwordCrypt)
+            window.localStorage.setItem('id', user.id)
 
-            console.log(window.localStorage)
             window.location = '/'
         }else{
             console.log('senha incorreta!')
+            AlertSpan.style.display = 'flex'
             window.localStorage.clear()
-           // window.location = '/'
         }
+    }
+
+    function VisiblePassword(){
+      var InputPassword = document.getElementById("password");
+      var VisibleIcon = document.getElementById('LuEye')
+      var NoVisibleIcon = document.getElementById('LuEyeOff')
+      if (InputPassword.type === "password") {
+        VisibleIcon.style.display = 'none'
+        NoVisibleIcon.style.display = 'flex'
+        InputPassword.type = "text";
+      } else {
+        InputPassword.type = "password";
+        VisibleIcon.style.display = 'flex'
+        NoVisibleIcon.style.display = 'none'
+      }
     }
 
 
   return (
-    <>
-    <div>
-      <form>
-        <input type="text" placeholder="email..."  value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password"  autoComplete="false" placeholder="senha..."  value={password} onChange={(e) => setPassword(e.target.value)} required/>
-      </form>
-      <button onClick={Login}>Logar</button>
+    <div className="LoginPage">
+      <div className="Form">
+        <TitleLogin/>
+        <input type="text" id="login" placeholder="Email..."  value={email} onChange={(e) => {setEmail(e.target.value); AlertSpan.style.display = 'none'; EmailRequire.style.display = 'none'}} required />
+        <spam id='FormRequireEmail'><LuMailWarning/> Coloque um e-mail!</spam>
+        <div className="PasswordDiv"><input type="password" id="password"  autoComplete="false" placeholder="senha..."  value={password} onChange={(e) => {setPassword(e.target.value); AlertSpan.style.display = 'none'; PasswordRequire.style.display = 'none'}} required/><span id="BtnPassword" onClick={VisiblePassword}><LuEye id="LuEye"/> <LuEyeOff id="LuEyeOff"/></span></div>
+        <spam id='FormRequirePassword'><LuShieldQuestion/>Coloque sua senha!</spam>
+        <spam id='FormIncorrectPassEmail'> <LuAlertTriangle/> E-mail/Senha incorretos!</spam>
+        <button  onClick={Login}>Entrar</button>
+        <div className="extra">Crie uma conta clicando <a href="/registro">aqui!</a></div>
+      </div>
     </div>
-    </>
   );
 };
 

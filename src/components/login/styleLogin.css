@@ -1,0 +1,95 @@
+.LoginPage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.Form {
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid #fff;
+    backdrop-filter: blur(3px);
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: min( 300px, 80vw);
+}
+
+.Form input {
+    border-radius: 5px;
+    border: none;
+    overflow: none;
+    padding: 5px;
+    margin: 5px;
+    font-size: 20px;
+    width: min( 250px, 90%);
+}
+.Form input:focus::placeholder {
+    color: transparent;
+}
+
+.PasswordDiv input {
+    width: min( 220px, 80%);
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    margin: 0;
+}
+.PasswordDiv span {
+    height: 33px;
+    width: 30px;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-color: #fff;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: none;
+    margin: 0;
+    font-size: 25px;
+}
+.PasswordDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 0px
+}
+#LuEyeOff {
+    display: none;
+}
+
+.Form input:focus {
+    border: none;
+    overflow: none;
+    outline: none;
+}
+.Form button {
+    width: 150px;
+    height: 50px;
+    margin: 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+}
+.Form div a{
+    text-decoration: underline wavy #fff;
+    color: #fff;
+}
+#FormIncorrectPassEmail {
+    display: none;
+    color: #ff0a0a;
+}
+#FormRequireEmail {
+    display: none;
+    color: #ff0a0a;
+}
+#FormRequirePassword {
+    display: none;
+    color: #ff0a0a;
+}

@@ -14,6 +14,7 @@ function App() {
     }else{
       var email = window.localStorage.getItem('email')
       var name = window.localStorage.getItem('name')
+      console.log(window.localStorage)
       setEmailUser(email)
       setNameUser(name)
     }
@@ -30,6 +31,7 @@ function App() {
       <a href="/registro"> - REGISTRO - </a>
       <a href="/login"> - LOGIN - </a>
       <a href="/autologin"> - AUTOLOGIN - </a>
+      <a href="/conta"> - Perfil - </a>
       <button onClick={function(){window.localStorage.clear(); console.log(window.localStorage); window.location.reload()}}>RESET localStorage</button>
     </div>
     </>
