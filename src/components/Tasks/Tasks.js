@@ -84,7 +84,9 @@ function TasksPage(){
 
 
     async function DeleteTask(id){ // DELETAR TASK DO BD
+        const element = document.getElementById(`task${id}`)
         const userDoc = doc(db, window.localStorage.getItem('id'), id)
+        element.remove()
         await deleteDoc(userDoc);
         window.location.reload()
     }
@@ -111,7 +113,6 @@ function TasksPage(){
             }
             i++
         }
-        console.log(TaskSelect)
         
         if(task.attributes.getNamedItem('class').value === ''){
             task.setAttribute('class' , 'ConfirmBtnCheck')
@@ -120,7 +121,7 @@ function TasksPage(){
 
             taskEdit = {name: TaskSelect.name , color: TaskSelect.color, stats: 'ConfirmBtnCheck'}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
-            window.location.reload()
+          //  window.location.reload()
         }else{
             task.setAttribute('class', '' )
             CheckTaskOff.style.display = 'none'
@@ -128,7 +129,7 @@ function TasksPage(){
 
             taskEdit = {name: TaskSelect.name , color: TaskSelect.color, stats: ''}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
-            window.location.reload()
+           // window.location.reload()
         }
     }
     
@@ -139,11 +140,12 @@ function TasksPage(){
         }else{
             status = ''
         }
+        
         return (
-            <div className="TasksDiv">
-                <div id="Task" className="Task" onClick={()=> MarkTask(item.id)} style={{backgroundColor: `${item.color}`}}>
-                        <span  onClick={()=> MarkTask(item.id)} className={status} id={item.id} > {item.name} </span>
-                        <button className="ConfirmBtn"><AiOutlineCheck id="CheckTask"/><AiOutlineClose id="CheckOffTask"/></button>
+            <div className="TasksDiv"  id={`task${item.id}`}>
+                <div id="Task" className="Task"  style={{backgroundColor: `${item.color}`}}>
+                        <span   className={status} id={item.id} > {item.name} </span>
+                        <button onClick={()=> MarkTask(item.id)} className="ConfirmBtn"><AiOutlineCheck id="CheckTask"/><AiOutlineClose id="CheckOffTask"/></button>
                         <button onClick={()=> DeleteTask(item.id)} className="DeletBtn"><AiOutlineDelete/></button>
                 </div>
             </div>
@@ -157,13 +159,16 @@ function TasksPage(){
         }
     }
     async function AdicionarTask(){ // ADICIONAR UMA NOVA TASK AO BANCO DE DADOS
-        
         if(NameTask === ''){
             document.getElementById('AlertNameOut').style.display = 'flex'
             return
         }
+        const data = await getDocs(TaskCollectionRef);
+        var Total = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
+        console.log(Total.length)
+
         var tasks = {name: NameTask , color: ColorTask, stats: ''}
-        var idTask = Tasks.length + 1
+        var idTask = Total.length + 1
 
         await setDoc(doc(db, UserInfo.id, idTask.toString()), tasks);
         window.location.reload()
@@ -174,14 +179,14 @@ function TasksPage(){
         <>
         <Navbar/>
         <div className="TaskPage">
-            <fieldset>
+            <fieldset id="ExemepleTaskDiv">
                 <legend>Tasks</legend>
                 <div className="NewTaskDiv">
                     <span>Criar uma nova task!</span>
                     <button onClick={()=> CreateNewTaskDiv('visible')}><AiOutlineFileAdd/></button>
                 </div>
             </fieldset>
-            <fieldset id="CreateTaskDiv" className="CreateTasksForm">
+            <fieldset id="CreateTaskDiv" className="CreateTasksForm" >
                 <legend>Adicionar uma Task!</legend>
                 <button className="CloseBtn" onClick={()=> CreateNewTaskDiv()}><AiOutlineClose/></button>
                 <div id="TaskExemeple" className="TaskExemeple">
@@ -207,8 +212,8 @@ function TasksPage(){
                 </div>
                 <button className="createBtn" onClick={()=> AdicionarTask()}><span><IoAdd/></span></button>
             </fieldset>
-            <div className="Tasks">
-                {Tasks.map((Tasks, index) => <MostrarTasks item={Tasks} />)}
+            <div className="Tasks" id="TasksList">
+                {Tasks.map((Tasks) => <MostrarTasks item={Tasks} />)}
             </div>
         </div>
         </>
