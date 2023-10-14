@@ -1,0 +1,54 @@
+nav {
+    width: 100vw;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(277, 277, 277, 0.6);
+    border-bottom: 1px solid #000;
+    position: fixed;
+}
+nav p {
+    font-size: 25px;
+    width: auto;
+    text-align: center;
+    flex-wrap: nowrap;
+}
+
+.social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    font-size: 25px;
+    grid-gap: 10px;
+}
+.social a{
+    cursor: pointer;
+    color: #000;
+}
+.social a:hover{
+    transition: 1s;
+    transform: scale(1.2);
+}
+.account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+}
+.account button {
+    font-size: 35px;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-radius: 5px;
+}
+.account button:hover {
+    transition: 1s;
+    transform: scale(1.2);
+}

@@ -35,8 +35,10 @@ function LoginPage() {
     const userCollectionRef = collection(db, 'users');
 
     async function BuscarUsers(){
-      const data = await getDocs(userCollectionRef);
-      setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+      if(userss.length === 0){
+        const data = await getDocs(userCollectionRef);
+        setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+      }else{return}
     }
     setTimeout(BuscarUsers, 100)
 
@@ -119,6 +121,7 @@ function LoginPage() {
 
   return (
     <div className="LoginPage">
+
       <div className="Form">
         <TitleLogin/>
         <input type="text" id="login" placeholder="Email..."  value={email} onChange={(e) => {setEmail(e.target.value); AlertSpan.style.display = 'none'; EmailRequire.style.display = 'none'}} required />

@@ -10,6 +10,7 @@ function App() {
   async function AutoLogin(){
     if(window.localStorage.getItem('email') === null){
       console.log('nenhuma conta logada')
+      console.log(window.localStorage)
       window.location = '/autologin'
     }else{
       var email = window.localStorage.getItem('email')
@@ -17,6 +18,7 @@ function App() {
       console.log(window.localStorage)
       setEmailUser(email)
       setNameUser(name)
+      console.log(window.localStorage)
     }
   }
   setTimeout(AutoLogin, 10)
@@ -31,7 +33,7 @@ function App() {
       <a href="/registro"> - REGISTRO - </a>
       <a href="/login"> - LOGIN - </a>
       <a href="/autologin"> - AUTOLOGIN - </a>
-      <a href="/conta"> - Perfil - </a>
+      <a href="/tasks"> - Tasks - </a>
       <button onClick={function(){window.localStorage.clear(); console.log(window.localStorage); window.location.reload()}}>RESET localStorage</button>
     </div>
     </>

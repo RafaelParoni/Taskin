@@ -1,0 +1,189 @@
+.TaskPage {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.CreateTasksForm {
+    padding: 15px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    width: min(400px, 80vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(277, 277, 277, 0.3);
+    display: none;
+    position: fixed;
+    padding-top: 40px;
+}
+.CloseBtn {
+    position: absolute;
+    top: 15px;
+    right: -10px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #000;
+    background-color: #ff0000;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.TaskExemeple {
+    background-color: #000000;
+    width: 90%;
+    display: inline-flex;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.TaskExemeple input {
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 25px;
+}
+.TaskExemeple input::placeholder {
+    color: #fff;
+}
+.TaskExemeple button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    padding-inline: 10px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-inline: 3px;
+}
+.DeletBtn {
+    background-color: #ff0000;
+}
+.ConfirmBtn {
+    background-color: #06a01a;
+}
+.ConfirmBtnCheck {
+    text-decoration:line-through
+}
+.TaskExemeple button:hover {
+    transition: 0.5s;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+.InputName {
+    outline: none;
+    overflow: none;
+    color: #000;
+    font-size: 25px;
+    width: 90%;
+}
+.InputName:focus::placeholder {
+    color: #fff;
+}
+.TaskCreate {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+    padding: 5px;
+    justify-content: center;
+    align-content: center;
+}
+.TaskCreate div {
+    display: inline-flex;
+    justify-content: center;
+}
+.TaskCreate span {
+    text-align: center;
+    color: #ff0000;
+    display: none;
+}
+
+.createBtn {
+    cursor: pointer;
+}
+.createBtn span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+.NewTaskDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    padding: 5px;
+}
+.NewTaskDiv button {
+    font-size: 25px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#CheckOffTask {
+    display: none;
+}
+
+.TasksDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    grid-gap: 5px;
+}
+.Task {
+    width: min(500px, 90vw);
+    background-color: #000000;
+    display: inline-flex;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.Task input {
+    width: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 25px;
+}
+.Task input::placeholder {
+    color: #fff;
+}
+.Task button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    padding-inline: 10px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-inline: 3px;
+}
+
+.Task button:hover {
+    transition: 0.5s;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+.Task span {
+    outline: none;
+    overflow: none;
+    color: #fff;
+    font-size: 25px;
+    width: 90%;
+    cursor: default;
+}

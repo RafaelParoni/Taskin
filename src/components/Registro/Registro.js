@@ -166,7 +166,7 @@ function RegistroPage() {
       if(window.localStorage.getItem('email') !== null){
         console.log(window.localStorage)
         console.log('temos uma conta logada')  
-      // window.location = '/'
+        window.location = '/'
       }
     }
     setTimeout(VerifiqueSession, 100)
@@ -218,7 +218,7 @@ function RegistroPage() {
         <span id="PasswordVerifValid"><LuShieldQuestion/> Senhas Diferentes!</span>
         <div id="RequiredList" >
           <ul>
-            <span>Necessário:</span>
+            <span>requisitos para a senha:</span>
             <li id="NumberValid">Número</li>
             <li id="StringValid">Letra</li>
             <li id="CaractValid">Caractere especial</li>
