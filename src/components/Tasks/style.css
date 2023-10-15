@@ -17,10 +17,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(277, 277, 277, 0.3);
+    background-color: #ffffffc0;
     display: none;
     position: fixed;
     padding-top: 40px;
+}
+.CreateTasksForm legend {
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 5px;
 }
 .CloseBtn {
     position: absolute;
@@ -115,6 +121,15 @@
     align-items: center;
     justify-content: center;
     font-size: 30px;
+}
+
+#BackgroundCreateTaskDiv {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: #000000a8;
+    z-index: 0;
+    display: none;
 }
 
 .NewTaskDiv {

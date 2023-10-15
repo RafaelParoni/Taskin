@@ -136,8 +136,10 @@ function TasksPage(){
     function CreateNewTaskDiv(value){ // MONSTAR DIV PARA CRIAR UMA NOVA TASK
         if(value === 'visible'){
             document.getElementById('CreateTaskDiv').style.display = 'flex'
+            document.getElementById('BackgroundCreateTaskDiv').style.display = 'flex'
         }else {
             document.getElementById('CreateTaskDiv').style.display = 'none'
+            document.getElementById('BackgroundCreateTaskDiv').style.display = 'none'
         }
     }
     async function AdicionarTask(){ // ADICIONAR UMA NOVA TASK AO BANCO DE DADOS
@@ -196,6 +198,7 @@ function TasksPage(){
                     <button onClick={()=> CreateNewTaskDiv('visible')}><AiOutlineFileAdd/></button>
                 </div>
             </fieldset>
+            <div id="BackgroundCreateTaskDiv"></div>
             <fieldset id="CreateTaskDiv" className="CreateTasksForm" >
                 <legend>Adicionar uma Task!</legend>
                 <button className="CloseBtn" onClick={()=> CreateNewTaskDiv()}><AiOutlineClose/></button>
