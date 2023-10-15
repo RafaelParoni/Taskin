@@ -203,6 +203,7 @@ function TasksPage(){
     return (
         <>
         <Navbar/>
+        <div id="BackgroundCreateTaskDiv"></div>
         <div className="TaskPage" >
             <fieldset id="ExemepleTaskDiv">
                 <legend>Tasks</legend>
@@ -211,7 +212,6 @@ function TasksPage(){
                     <button onClick={()=> CreateNewTaskDiv('visible')}><AiOutlineFileAdd/></button>
                 </div>
             </fieldset>
-            <div id="BackgroundCreateTaskDiv"></div>
             <fieldset id="CreateTaskDiv" className="CreateTasksForm" >
                 <legend>Adicionar uma Task!</legend>
                 <button className="CloseBtn" onClick={()=> CreateNewTaskDiv()}><AiOutlineClose/></button>
