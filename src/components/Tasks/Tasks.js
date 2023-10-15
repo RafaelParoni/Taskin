@@ -25,6 +25,7 @@ function TasksPage(){
     const [UserInfo, setUserInfo] = useState({}) // info User
 
     const [Tasks, setTasks] = useState([]); // Tasks User
+    var TaskDispley = []
 
 
     async function AutoLogin(){
@@ -149,19 +150,31 @@ function TasksPage(){
         }
         const data = await getDocs(TaskCollectionRef);
         var Total = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
-        console.log(Total.length)
-
+      
         var tasks = {name: NameTask , color: ColorTask, stats: ''}
-        var idTask = Total.length + 1
+        
+        var i = 0
+        var maiorNum = 0
+        while( i < Total.length){
+            var NumberTask = parseInt(Total[i].id)
+            if(NumberTask >= maiorNum){
+                maiorNum = NumberTask
+            }
+            i++
+        }
+        console.log(`Maior Numero: ${maiorNum}`)
+        var idTask =  maiorNum  + 1
 
         await setDoc(doc(db, UserInfo.id, idTask.toString()), tasks);
+
         window.location.reload()
 
     }
 
 
-    var TaskDispley = []
+    
     function TasksListDisplay(){
+        TaskDispley = []
         if(TaskDispley.length !== 0){
             return
         }
