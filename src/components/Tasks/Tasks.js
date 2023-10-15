@@ -88,7 +88,7 @@ function TasksPage(){
         const userDoc = doc(db, window.localStorage.getItem('id'), id)
         element.remove()
         await deleteDoc(userDoc);
-        window.location.reload()
+       // window.location.reload()
     }
 
     const [NameTask, setNameTask] = useState('')
@@ -133,24 +133,6 @@ function TasksPage(){
         }
     }
     
-    function MostrarTasks({item}){ // MOSTRAR TASKS PARA O USUARIOS
-        var status = ''
-        if(item.stats === 'ConfirmBtnCheck'){
-            status = 'ConfirmBtnCheck'
-        }else{
-            status = ''
-        }
-        
-        return (
-            <div className="TasksDiv"  id={`task${item.id}`}>
-                <div id="Task" className="Task"  style={{backgroundColor: `${item.color}`}}>
-                        <span   className={status} id={item.id} > {item.name} </span>
-                        <button onClick={()=> MarkTask(item.id)} className="ConfirmBtn"><AiOutlineCheck id="CheckTask"/><AiOutlineClose id="CheckOffTask"/></button>
-                        <button onClick={()=> DeleteTask(item.id)} className="DeletBtn"><AiOutlineDelete/></button>
-                </div>
-            </div>
-        )
-    }
     function CreateNewTaskDiv(value){ // MONSTAR DIV PARA CRIAR UMA NOVA TASK
         if(value === 'visible'){
             document.getElementById('CreateTaskDiv').style.display = 'flex'
@@ -172,13 +154,41 @@ function TasksPage(){
 
         await setDoc(doc(db, UserInfo.id, idTask.toString()), tasks);
         window.location.reload()
+
     }
+
+
+    var TaskDispley = []
+    function TasksListDisplay(){
+        if(TaskDispley.length !== 0){
+            return
+        }
+        var status = ''
+        for(const key in Tasks){
+            if(Tasks[key].stats === 'ConfirmBtnCheck'){
+                status = 'ConfirmBtnCheck'
+            }else{
+                status = ''
+            }
+            TaskDispley.push(
+                <div className="TasksDiv"  id={`task${Tasks[key].id}`}>
+                    <div id="Task" className="Task"  style={{backgroundColor: `${Tasks[key].color}`}}>
+                            <span   className={status} id={Tasks[key].id} > {Tasks[key].name} </span>
+                            <button onClick={()=> MarkTask(Tasks[key].id)} className="ConfirmBtn"><AiOutlineCheck id="CheckTask"/><AiOutlineClose id="CheckOffTask"/></button>
+                            <button onClick={()=> DeleteTask(Tasks[key].id)} className="DeletBtn"><AiOutlineDelete/></button>
+                    </div>
+                </div>
+            )
+
+        }
+    }
+    TasksListDisplay()
 
 
     return (
         <>
         <Navbar/>
-        <div className="TaskPage">
+        <div className="TaskPage" >
             <fieldset id="ExemepleTaskDiv">
                 <legend>Tasks</legend>
                 <div className="NewTaskDiv">
@@ -212,8 +222,8 @@ function TasksPage(){
                 </div>
                 <button className="createBtn" onClick={()=> AdicionarTask()}><span><IoAdd/></span></button>
             </fieldset>
-            <div className="Tasks" id="TasksList">
-                {Tasks.map((Tasks) => <MostrarTasks item={Tasks} />)}
+            <div className="Tasks" id="TasksList" onLoad={TasksListDisplay}>
+                {TaskDispley}
             </div>
         </div>
         </>
