@@ -280,7 +280,7 @@ function TasksPage(){
                 </div>
             </div>
             <div className="Tasks">
-                <h4>Saus Taskins!</h4>
+                <h4>Suas Taskins!</h4>
                 <div className="TasksList" onLoad={TasksListDisplay}>
                     {TaskDispley}
                 </div>
