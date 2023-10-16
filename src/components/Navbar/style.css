@@ -4,8 +4,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: rgba(277, 277, 277, 0.6);
-    border-bottom: 1px solid #000;
+    background-color: #ffffffa4;
     position: fixed;
 }
 nav p {
@@ -40,9 +39,8 @@ nav p {
 .account button {
     font-size: 35px;
     border: none;
-    background-color: #fff;
+    background-color: #d6d6d6d2;
     cursor: pointer;
-    border: 1px solid #000;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -50,5 +48,5 @@ nav p {
 }
 .account button:hover {
     transition: 1s;
-    transform: scale(1.2);
+    box-shadow: 0px 0px 5px 1px #000;
 }

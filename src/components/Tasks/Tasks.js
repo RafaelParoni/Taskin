@@ -1,8 +1,7 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 
 import './style.css'
-import {AiOutlineDelete, AiOutlineCheck, AiOutlineExclamationCircle, AiOutlineFileAdd, AiOutlineClose} from 'react-icons/ai'
-import {IoAdd} from 'react-icons/io5'
+import {PiPenNibBold, PiNotePencilBold, PiPlusBold, PiXBold, PiSealWarningBold, PiHandBold,  PiPlusCircleBold, PiCheckBold, PiTrashSimpleBold, PiCaretRightBold} from 'react-icons/pi'
 import Navbar from './../Navbar/Navbar'
 
 // Banco de dados
@@ -89,57 +88,70 @@ function TasksPage(){
         const userDoc = doc(db, window.localStorage.getItem('id'), id)
         element.remove()
         await deleteDoc(userDoc);
-       // window.location.reload()
+
+        const data = await getDocs(TaskCollectionRef);
+        console.log(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+        if(data.docs.map((doc) => ({...doc.data(), id: doc.id})).length === 0){
+            window.location.reload()
+        }
     }
 
     const [NameTask, setNameTask] = useState('')
     const [ColorTask, setColorTask] = useState('')
 
-    function EditColorExemeple(color){ // PEGANDO COR ESCOLHIDA PELO USUARIO
-        var TaskExemeple = document.getElementById('TaskExemeple')
-        TaskExemeple.style.backgroundColor = color
+    const textAreaRef = useRef(null);
+    const [Val, setVal] = useState("");
+    const handleChange = (e) => {
+        setVal(e.target.value);
+    }
+    useEffect(() => {
+        textAreaRef.current.style.height = "25px";
+        textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
+    }, [Val])
+
+
+
+    function NewTaskColorEdit(color){ // PEGANDO COR ESCOLHIDA PELO USUARIO
+        var NewTaskH1 = document.getElementById('NewTaskH1')
+        NewTaskH1.style.color = color
     }
 
     async function MarkTask(value){ // MARCAR TASK 
         var task = document.getElementById(value)
-        var CheckTask = document.getElementById(`CheckTask`)
-        var CheckTaskOff = document.getElementById('CheckOffTask')
         const Tasks = await getDocs(TaskCollectionRef);
         var TaskSelect = Tasks.docs.map((doc) => ({...doc.data(), id: doc.id}))
         var taskEdit = ''
         var i = 0
         while(i < TaskSelect.length ){
             if(TaskSelect[i].id === value){
-                TaskSelect = {name: TaskSelect[i].name, color: TaskSelect[i].color}
+                TaskSelect = {name: TaskSelect[i].name, color: TaskSelect[i].color, details: TaskSelect[i].details}
             }
             i++
         }
         
         if(task.attributes.getNamedItem('class').value === ''){
             task.setAttribute('class' , 'ConfirmBtnCheck')
-            CheckTaskOff.style.display = 'flex'
-            CheckTask.style.display = 'none'
 
-            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, stats: 'ConfirmBtnCheck'}
+            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: 'ConfirmBtnCheck'}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
           //  window.location.reload()
         }else{
             task.setAttribute('class', '' )
-            CheckTaskOff.style.display = 'none'
-            CheckTask.style.display = 'flex'
 
-            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, stats: ''}
+            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: ''}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
            // window.location.reload()
         }
     }
     
-    function CreateNewTaskDiv(value){ // MONSTAR DIV PARA CRIAR UMA NOVA TASK
-        if(value === 'visible'){
+    function CreateTaskDiv(value){ // MONSTAR DIV PARA CRIAR UMA NOVA TASK
+        if(value === 'create'){
             document.getElementById('CreateTaskDiv').style.display = 'flex'
             document.getElementById('BackgroundCreateTaskDiv').style.display = 'flex'
+            document.getElementById('textereaDeatils').style.height = '35px'
         }else {
             document.getElementById('CreateTaskDiv').style.display = 'none'
+            document.getElementById('textereaDeatils').style.height = '35px'
             document.getElementById('BackgroundCreateTaskDiv').style.display = 'none'
         }
     }
@@ -151,7 +163,7 @@ function TasksPage(){
         const data = await getDocs(TaskCollectionRef);
         var Total = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
       
-        var tasks = {name: NameTask , color: ColorTask, stats: ''}
+        var tasks = {name: NameTask , color: ColorTask, stats: '', details: Val}
         
         var i = 0
         var maiorNum = 0
@@ -170,76 +182,109 @@ function TasksPage(){
         window.location.reload()
 
     }
+    function OpenDetails(DetailsId, IndicadorId){
+        var Indicador = document.getElementById(IndicadorId)
+        var Details = document.getElementById(DetailsId)
+        if(Details.style.display === ''){
+            Indicador.style.rotate = '90deg'
+            Details.style.display = 'flex'
+        }else if(Details.style.display === 'none'){
+            Indicador.style.rotate = '90deg'
+            Details.style.display = 'flex'
+        }else{
+            Indicador.style.rotate = '0deg'
+            Details.style.display = 'none'
+        }
+    }
 
-
-    
+ 
     function TasksListDisplay(){
         TaskDispley = []
         if(TaskDispley.length !== 0){
             return
         }
         var status = ''
-        for(const key in Tasks){
-            if(Tasks[key].stats === 'ConfirmBtnCheck'){
-                status = 'ConfirmBtnCheck'
-            }else{
-                status = ''
-            }
+        if(Tasks.length === 0){
             TaskDispley.push(
-                <div className="TasksDiv"  id={`task${Tasks[key].id}`}>
-                    <div id="Task" className="Task"  style={{backgroundColor: `${Tasks[key].color}`}}>
-                            <span   className={status} id={Tasks[key].id} > {Tasks[key].name} </span>
-                            <button onClick={()=> MarkTask(Tasks[key].id)} className="ConfirmBtn"><AiOutlineCheck id="CheckTask"/><AiOutlineClose id="CheckOffTask"/></button>
-                            <button onClick={()=> DeleteTask(Tasks[key].id)} className="DeletBtn"><AiOutlineDelete/></button>
-                    </div>
-                </div>
+                <h3 className="AlertNoneTasks"><PiHandBold/> Ops, parece que você não tem nenhuma Takins em nosso banco de dados! crie um <span onClick={()=> CreateTaskDiv('create')}> aqui! <PiPlusCircleBold/> </span></h3>
             )
-
+        }else{
+            for(const key in Tasks){
+                if(Tasks[key].stats === 'ConfirmBtnCheck'){
+                    status = 'ConfirmBtnCheck'
+                }else{
+                    status = ''
+                }
+                var Details = ''
+                if(Tasks[key].details === '' || Tasks[key].details === undefined){
+                    Details = 'Parece que você não colocou nenhum detalhe na hora de criar sua Taskin :('
+                }else {
+                    Details = Tasks[key].details
+                }
+                TaskDispley.push(
+                    <>
+                        <div style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
+                                <p id={Tasks[key].id} onClick={()=> OpenDetails(`TaskDetails${Tasks[key].id}`, `TaskIndicator${Tasks[key].id}`)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
+                                <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
+                                <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
+                        </div>
+                        <div className="TaskDetails" id={`TaskDetails${Tasks[key].id}`} >
+                            <textarea defaultValue={Details} disabled='true'  />  
+                        </div>
+                    </>
+                )
+    
+            }
         }
     }
     TasksListDisplay()
 
-
+    
     return (
         <>
         <Navbar/>
-        <div id="BackgroundCreateTaskDiv"></div>
         <div className="TaskPage" >
-            <fieldset id="ExemepleTaskDiv">
-                <legend>Tasks</legend>
-                <div className="NewTaskDiv">
-                    <span>Criar uma nova task!</span>
-                    <button onClick={()=> CreateNewTaskDiv('visible')}><AiOutlineFileAdd/></button>
+            <div className="main" id="ExemepleTaskDiv">
+                <div className="mainTitles">
+                    <h1>Taskin <PiNotePencilBold/> </h1>
+                    <p>Crie tarefas no taskin com Nomes, Descrições e Cores personalizadas e quando se concretizaram marcar como concluída.</p>
                 </div>
-            </fieldset>
-            <fieldset id="CreateTaskDiv" className="CreateTasksForm" >
-                <legend>Adicionar uma Task!</legend>
-                <button className="CloseBtn" onClick={()=> CreateNewTaskDiv()}><AiOutlineClose/></button>
-                <div id="TaskExemeple" className="TaskExemeple">
-                    <input  type="text" className="" id="key" value={NameTask}  placeholder="........" disabled />
-                    <button onClick={()=> MarkTask('key')} className="ConfirmBtn"><span id="CheckTask"><AiOutlineCheck/></span> <span id="CheckOffTask"><AiOutlineClose/></span></button>
-                    <button className="DeletBtn"><AiOutlineDelete/></button>
-                </div>
-                <div className="TaskCreate">
-                    <span id="AlertNameOut"><AiOutlineExclamationCircle/> Coloque um Nome!</span>
-                    <input className="InputName"
-                        onChange={(e) => {setNameTask(e.target.value);  document.getElementById('AlertNameOut').style.display = 'none'}} 
-                        value={NameTask} 
-                        id="NameTaskk"  
-                        type="text"  
-                        placeholder="Task name..." 
-                        maxLength={25}/>
-                    <div>
-                        <input 
-                            onChange={(e) => {setColorTask(e.target.value); EditColorExemeple(e.target.value)} }
-                            id="ColorTaskk" 
-                            type="color" />
+                <div className="MainFuncitons">
+                    <div className="Funcitons">
+                        <span>Crie uma nova tarefa!</span>
+                        <button onClick={() => CreateTaskDiv('create')}><PiPenNibBold/></button>
                     </div>
                 </div>
-                <button className="createBtn" onClick={()=> AdicionarTask()}><span><IoAdd/></span></button>
-            </fieldset>
-            <div className="Tasks" id="TasksList" onLoad={TasksListDisplay}>
-                {TaskDispley}
+            </div>
+            <div className="BackgroundNewTask" id="BackgroundCreateTaskDiv" onClick={()=> CreateTaskDiv()}></div>
+            <div className="NewTask" id="CreateTaskDiv">
+                <button className="CloseNewTask" onClick={()=> CreateTaskDiv()} ><PiXBold/></button>
+                <div className="NewTaskTitles">
+                    <h3 id="NewTaskH1">Crie sua nova task!</h3>
+                    <p>Crie sua tarefa de acordo com os requisitos abaixo:</p>
+                </div>
+                <div className="NewTaskFormsName-Color">
+                    <input onChange={(e)=> setNameTask(e.target.value)} value={NameTask} name="name" className="NewTaskFormsInput" type="text" placeholder="Name Task..."/>
+                    <div class="NewTaskFormsInputColor">
+                        <input id="input-color"  onChange={(e) => {setColorTask(e.target.value); NewTaskColorEdit(e.target.value)} }  class="NewTaskFormsinput-color" type="color"/>
+                    </div>
+                </div>
+                <span id="AlertNameOut"><PiSealWarningBold/> Coloque um Nome!</span>
+                <div className="NewTaskFormsDscri">
+                    <textarea id="textereaDeatils"  wrap="hard" value={Val} ref={textAreaRef} onChange={handleChange} maxLength={2000}  placeholder="Escreva uma descrição da tarefa! - máximo de caracteres 2000" />
+                </div>
+                <span id="AlertDescriOut"><PiSealWarningBold/> Coloque uma descrição!</span>
+                <div className="NewTaskButtons"> 
+                    <span>Criar a tarefa!</span>   
+                    <button onClick={AdicionarTask}><PiPlusBold/></button>
+                </div>
+            </div>
+            <div className="Tasks">
+                <h4>Saus Taskins!</h4>
+                <div className="TasksList" onLoad={TasksListDisplay}>
+                    {TaskDispley}
+                </div>
+
             </div>
         </div>
         </>
