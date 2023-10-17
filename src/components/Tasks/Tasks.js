@@ -162,8 +162,7 @@ function TasksPage(){
         }
         const data = await getDocs(TaskCollectionRef);
         var Total = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
-      
-        var tasks = {name: NameTask , color: ColorTask, stats: '', details: Val}
+        var tasks = {name: NameTask , color: ColorTask, stats: '', details: Val, detailsHeight: document.getElementById('textereaDeatils').style.height }
         
         var i = 0
         var maiorNum = 0
@@ -229,7 +228,7 @@ function TasksPage(){
                                 <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
                         </div>
                         <div className="TaskDetails" id={`TaskDetails${Tasks[key].id}`} >
-                            <textarea defaultValue={Details} disabled='true'  />  
+                            <textarea style={{height: Tasks[key].detailsHeight}} defaultValue={Details} disabled='true'  />  
                         </div>
                     </>
                 )
