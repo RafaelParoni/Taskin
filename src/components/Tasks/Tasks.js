@@ -205,7 +205,7 @@ function TasksPage(){
         var status = ''
         if(Tasks.length === 0){
             TaskDispley.push(
-                <h3 className="AlertNoneTasks"><PiHandBold/> Ops, parece que você não tem nenhuma Takins em nosso banco de dados! crie um <span onClick={()=> CreateTaskDiv('create')}> aqui! <PiPlusCircleBold/> </span></h3>
+                <h3 className="AlertNoneTasks"><PiHandBold/> Ops, parece que você não tem nenhuma Taksins em nosso banco de dados! crie um <span onClick={()=> CreateTaskDiv('create')}> aqui! <PiPlusCircleBold/> </span></h3>
             )
         }else{
             for(const key in Tasks){
