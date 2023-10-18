@@ -143,7 +143,7 @@ function RegistroPage() {
          setCaractVeri(true)
        }
      }
-     if(value.length > 8){
+     if(value.length > 7){
       setLenghtVeri(true)
       LenghtValid.style.color = 'green'
      }
