@@ -84,9 +84,11 @@ function TasksPage(){
 
 
     async function DeleteTask(id){ // DELETAR TASK DO BD
-        const element = document.getElementById(`task${id}`)
+        const Task = document.getElementById(`task${id}`)
+        const TaskDetails = document.getElementById(`TaskDetails${id}`)
         const userDoc = doc(db, window.localStorage.getItem('id'), id)
-        element.remove()
+        Task.remove()
+        TaskDetails.remove()
         await deleteDoc(userDoc);
 
         const data = await getDocs(TaskCollectionRef);
@@ -227,7 +229,7 @@ function TasksPage(){
                                 <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
                                 <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
                         </div>
-                        <div className="TaskDetails" id={`TaskDetails${Tasks[key].id}`} >
+                        <div className="TaskDetails"  id={`TaskDetails${Tasks[key].id}`} >
                             <textarea style={{height: Tasks[key].detailsHeight}} defaultValue={Details} disabled='true'  />  
                         </div>
                     </>
