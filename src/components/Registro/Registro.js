@@ -117,7 +117,7 @@ function RegistroPage() {
         email,
         name, 
         passcrypt,
-        });
+        });  
         console.log(user)
         window.localStorage.setItem('name', name)
         window.localStorage.setItem('email', email)

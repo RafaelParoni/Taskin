@@ -9,6 +9,7 @@ import AutoLoginPage from './components/Autologin/AutoLogin';
 import LoginPage from './components/login/login';
 import Background from './components/background/background';
 import TasksPage from './components/Tasks/Tasks';
+import ProfilePage from './components/profile/profile';
 
 
 
@@ -23,6 +24,7 @@ root.render(
       <Route path='/registro' element={<RegistroPage/>}/>
       <Route path='/autologin' element={<AutoLoginPage/>} />
       <Route path='/login' element={<LoginPage/>} />
+      <Route path='/profile' element={<ProfilePage/>}/>
       <Route path='/*' element={<AutoLoginPage/>}/>
     </Routes>
   </BrowserRouter> 

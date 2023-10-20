@@ -36,7 +36,7 @@ function TasksPage(){
           var name = window.localStorage.getItem('name')
           setId(id)
           setNameUser(name)
-          document.title  = `Taskin - ${nameUser} perfil`
+          document.title  = `Taskin - ${nameUser}`
         }
     }
     setTimeout(AutoLogin, 10)
