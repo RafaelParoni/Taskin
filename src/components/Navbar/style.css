@@ -11,7 +11,6 @@
 .LargeScreen {
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 .SmallScreen {
     display: none;
@@ -40,8 +39,8 @@
     height: 50px;
     grid-gap: 10px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 .LargeSocial a {
     font-size: xx-large;
@@ -59,6 +58,7 @@
 .LargeAccount {
     width: auto;
     height: 50px;
+
     padding-inline: 10px;
     grid-gap: 5px;
     display: flex;
@@ -72,6 +72,11 @@
     font-size: 25px;
     border-radius: 5px;
     padding: 3px 5px 3px 5px;
+}
+.LargeAccount button:hover {
+    transition: 0.3s;
+    box-shadow: 0 0 5px 1px #000;
+    transform: scale(1.1);
 }
 
 /* SMALL SCREEN */
@@ -113,4 +118,9 @@
     font-size: 25px;
     border-radius: 5px;
     padding: 3px 5px 3px 5px;
+}
+.SmallAccount button:hover {
+    transition: 0.3s;
+    box-shadow: 0 0 5px 1px #000;
+    transform: scale(1.1);
 }
