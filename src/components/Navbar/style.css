@@ -1,53 +1,116 @@
-nav {
+.Navbar {
     width: 100vw;
     height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #ffffffa4;
     position: fixed;
-}
-nav p {
-    font-size: 25px;
-    width: auto;
-    text-align: center;
-    flex-wrap: nowrap;
+    background-color: #949494d7;
+    z-index: 5;
+    border-bottom: 1px solid #000;
+
 }
 
-.social {
+.LargeScreen {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    width: 200px;
-    font-size: 25px;
+}
+.SmallScreen {
+    display: none;
+    justify-content: space-between;
+    padding-bottom: 25px;
+}
+
+@media screen and (max-width: 600px) {
+    .LargeScreen {
+        display: none;
+    }
+    .SmallScreen {
+        display: flex;
+    }
+    .Navbar {
+        bottom: 0;
+        border-top: 1px solid #000;
+        border-bottom: none;
+    }
+}
+
+/* LARGE SCREEN */
+.LargeSocial {
+    width: auto;
+    padding-inline: 15px;
+    height: 50px;
     grid-gap: 10px;
-}
-.social a{
-    cursor: pointer;
-    color: #000;
-}
-.social a:hover{
-    transition: 1s;
-    transform: scale(1.2);
-}
-.account {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    grid-gap: 15px;
 }
-.account button {
-    font-size: 35px;
-    border: none;
-    background-color: #d6d6d6d2;
-    cursor: pointer;
+.LargeSocial a {
+    font-size: xx-large;
+    color: #000;
+    text-decoration: none;
+}
+.LargeSocial a:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+}
+.LargeUser p{
+    font-size: large;
+}
+
+.LargeAccount {
+    width: auto;
+    height: 50px;
+    padding-inline: 10px;
+    grid-gap: 5px;
     display: flex;
+    align-items: center;
     justify-content: center;
-    align-content: center;
-    border-radius: 5px;
+    position: relative;
 }
-.account button:hover {
-    transition: 1s;
-    box-shadow: 0px 0px 5px 1px #000;
+.LargeAccount button {
+    cursor: pointer;
+    border: none;
+    font-size: 25px;
+    border-radius: 5px;
+    padding: 3px 5px 3px 5px;
+}
+
+/* SMALL SCREEN */
+.SmallSocial {
+    width: auto;
+    padding-inline: 15px;
+    height: 50px;
+    grid-gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.SmallSocial a {
+    font-size: xx-large;
+    color: #000;
+    text-decoration: none;
+}
+.SmallSocial a:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+}
+.SmallUser p{
+    font-size: large;
+}
+
+.SmallAccount {
+    width: auto;
+    height: 50px;
+    padding-inline: 10px;
+    grid-gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.SmallAccount button {
+    cursor: pointer;
+    border: none;
+    font-size: 25px;
+    border-radius: 5px;
+    padding: 3px 5px 3px 5px;
 }
