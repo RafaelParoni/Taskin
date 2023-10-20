@@ -240,14 +240,14 @@ function ProfilePage(){
                 <div className="ProfileDiv">
                     <div className="Info">
                         <img alt="Profile Icon" src={ProfileIconDefault}/>
-                        <input value={UserInfo.name} disabled />
+                        <input className="NameProfile" value={UserInfo.name} disabled />
+                        <input className="EmailProifle" value={UserInfo.email} disabled />
                     </div>
                     <div className="Funciton">
                         <button onClick={()=> edit('DeletAccount')} style={{backgroundColor: "#f51c1c"}}><PiTrashSimpleBold/>Deletar conta</button>
                         <button onClick={() => edit('EditName')} style={{backgroundColor: "#0999bd"}}><PiPencilSimpleLineBold/> Editar Nome</button>
                         <button onClick={() => edit('EditPassowrd')} style={{backgroundColor: "#eff31f"}}><PiShieldBold/> Editar Senha</button>
                         <button  id="BtnDisable" onClick={() => edit('profileImg')}style={{backgroundColor: "#09bd09"}}> <PiSmileyBold/> Editar Foto de perfil</button>
-                        <button id="BtnDisable"  onClick={() => edit('info')}style={{backgroundColor: "#f31f89"}}> <PiLightbulbBold/> Informações da conta</button>
                     </div>
                 </div>
                 <div id="CloseEdit" onClick={()=> CloseEdit()}></div>
@@ -290,6 +290,7 @@ function ProfilePage(){
                     <span id="alertAccountDelet" style={{display: 'none'}}> <PiHandPalmBold/> <b>Email errado!</b></span>
                     <button onClick={()=> Delete()} className="DeletBtn">Deletar</button>
                 </div>  
+                
             </div>
         </>
     )
