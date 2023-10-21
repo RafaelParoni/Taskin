@@ -363,6 +363,36 @@
 }
 
 
+@keyframes LoadingAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+.LoadingAnimation {
+    animation-name: LoadingAnimation;
+    animation-duration: 1s;
+    animation-delay: 0s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+    transform: rotate(0deg);
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+}
+.LoadingDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.LoadingDiv h3 {
+    margin: 0;
+    padding: 0;
+}
+
 /* 
     #BtnDisable{
         filter: opacity(0.5);

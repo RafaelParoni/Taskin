@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs-react";
 import './style.css'
 import ProfileIconDefault from './../../profileIcons/avatar_man_01.png';
 import Navbar from "../Navbar/Navbar";
-import {PiProhibitBold, PiPencilSimpleLineBold, PiSmileyBold, PiTrashSimpleBold, PiHandPalmBold, PiShieldBold} from 'react-icons/pi'
+import {PiProhibitBold, PiArrowCounterClockwiseBold, PiPencilSimpleLineBold, PiSmileyBold, PiTrashSimpleBold, PiHandPalmBold, PiShieldBold} from 'react-icons/pi'
 
 
 import { initializeApp   } from "firebase/app";
@@ -247,6 +247,12 @@ function ProfilePage(){
         <>
             <Navbar/>
             <div className="ProfilePage">
+                {ProfileImg.length === 0 && (
+                    <div className="LoadingDiv">
+                        <h3>Loading...</h3>
+                        <span className="LoadingAnimation"><PiArrowCounterClockwiseBold/></span>
+                    </div>
+                )}
                 {ProfileImg.length > 0 && (
                     <div className="ProfileDiv">
                         <div className="Info">
