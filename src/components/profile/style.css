@@ -29,8 +29,8 @@
     outline: none;
     border: none;
     text-align: center;
-    padding: 15px 15px 0 15px;
-    margin: 15px 15px 0 15px;
+    padding: 0 0 10px 0;
+    margin: 0 0 0 0;
     font-size: 25px;
     color: #000;
     border-radius: 15px;
@@ -74,14 +74,6 @@
     transition: 0.4s;
     box-shadow: 0px 0px 5px 1px #000;
     transform: scale(1.1);
-}
-#BtnDisable{
-    filter: opacity(0.5);
-}
-#BtnDisable:hover {
-    transform: none;
-    box-shadow: none;
-    cursor: not-allowed;
 }
 @media screen and (max-width: 600px) {
     .Funciton {
@@ -286,5 +278,98 @@
     align-items: flex-start;
     justify-content: center;
 }
+/* Edit Profile Img */
+.EditProfileImg {
+    width: min(500px, 80vw);
+    height: auto;
+    background-color: #bbbabae7;
+    border-radius: 15px;
+    position: fixed;
+    display: none;
+    text-align: center;
+    flex-direction: column;
+}
+.Options {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-gap: 10px;
+}
+.Options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-gap: 10px;
+    flex-wrap: wrap;
+}
+.Options button {
+    cursor: pointer;
+    margin-inline: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+.Options button:hover {
+    transition: 0.3s;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px 0.5px #000;
+}
+.Options img {
+    width: 50px;
+}
+.OptionsSelect {
+    height: auto;
+    width: 100%;
+}
+.OptionsSelect h3{
+    margin: 10px;
+    padding: 0;
+}
+.OptionsSelect img {
+    margin: 15px;
+    padding: 15px;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 15px;
+}
+.BtnSave {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+.BtnSave button {
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    cursor: pointer;
+    background-color: #09bd09;
+    color: #fff;
+}
+.BtnSave button:hover {
+    transition: 0.2s;
+    transform: scale(1.1);
+    box-shadow: 0 0 10px 0.5px #000;
+}
 
 
+/* 
+    #BtnDisable{
+        filter: opacity(0.5);
+    }
+    #BtnDisable:hover {
+        transform: none;
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+*/

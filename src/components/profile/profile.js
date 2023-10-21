@@ -2,9 +2,9 @@ import { useState} from "react"
 import bcrypt from "bcryptjs-react";
 
 import './style.css'
-import ProfileIconDefault from './../../profileIcons/AvatarMale01.png'
+import ProfileIconDefault from './../../profileIcons/avatar_man_01.png';
 import Navbar from "../Navbar/Navbar";
-import {PiProhibitBold, PiPencilSimpleLineBold, PiSmileyBold, PiTrashSimpleBold, PiHandPalmBold, PiShieldBold, PiLightbulbBold} from 'react-icons/pi'
+import {PiProhibitBold, PiPencilSimpleLineBold, PiSmileyBold, PiTrashSimpleBold, PiHandPalmBold, PiShieldBold} from 'react-icons/pi'
 
 
 import { initializeApp   } from "firebase/app";
@@ -24,6 +24,7 @@ const firebaseApp = initializeApp({
 function ProfilePage(){
     const [Id, setId] = useState('')
     const [NameUser, setNameUser] = useState('')
+    const [ProfileImg, setProfileImg] = useState('')
     const [UserInfo, setUserInfo] = useState({}) 
 
     const [userss, setUsers] = useState([]);
@@ -47,6 +48,7 @@ function ProfilePage(){
     const [NewName, setNewName] =  useState('')
     const [NewPassword, setNewPassword ] = useState('')
     const [CofnirmPassword, setCofnirmPassword] = useState('')
+    const [NewAvatar, SetNewAvatar] = useState('')
 
     const [ConfirmEmail, setConfirmEmail] = useState('')
 
@@ -58,22 +60,19 @@ function ProfilePage(){
             
         }else{BuscarInfoUser()}
     }
-    setTimeout(BuscarUsers, 100)
-
+    setTimeout(BuscarUsers, 5)
     async function BuscarInfoUser(){
         var i = 0
         while(i < userss.length){
             if(Id === userss[i].id){
                 setUserInfo(userss[i])
-                break
+                setProfileImg(userss[i].profileImg)
+                return
             }
             i++
         }
     }
     async function edit(value){
-        if(value === 'profileImg' || value === 'info'){
-            return
-        }
         document.getElementById(value).style.display = 'flex'
         document.getElementById('CloseEdit').style.display = 'flex'
 
@@ -83,6 +82,7 @@ function ProfilePage(){
         document.getElementById('EditName').style.display = 'none'
         document.getElementById('EditPassowrd').style.display = 'none'
         document.getElementById('CloseEdit').style.display = 'none'
+        document.getElementById('EditAvatar').style.display = 'none'
     }
     async function EditName(value){
         console.warn('Eitando Nome!')
@@ -232,24 +232,36 @@ function ProfilePage(){
         window.localStorage.clear()
         window.location = '/'
     }
-
+    async function SelectAvatar(select) {   
+        var img = document.getElementById(select)
+      //  alert(img.getAttribute("src"))
+        document.getElementById('DispleySelectAvatar').setAttribute('src', `${img.getAttribute("src")}`)
+        SetNewAvatar(img.getAttribute("src"))
+    }
+    async function EditAvatar(){
+        var ProfileEdit = {email: UserInfo.email, name: UserInfo.name, passcrypt: UserInfo.passcrypt, profileImg: NewAvatar}
+        await setDoc(doc(db, 'users', Id), ProfileEdit);
+        window.location.reload()
+    }
     return (
         <>
             <Navbar/>
             <div className="ProfilePage">
-                <div className="ProfileDiv">
-                    <div className="Info">
-                        <img alt="Profile Icon" src={ProfileIconDefault}/>
-                        <input className="NameProfile" value={UserInfo.name} disabled />
-                        <input className="EmailProifle" value={UserInfo.email} disabled />
+                {ProfileImg.length > 0 && (
+                    <div className="ProfileDiv">
+                        <div className="Info">
+                            {ProfileImg.length > 0 && (<img alt="Profile Icon" src={`${ProfileImg}`}/>)}
+                            <input  className="NameProfile" value={UserInfo.name} disabled />
+                            <input className="EmailProifle" value={UserInfo.email} disabled />
+                        </div>
+                        <div className="Funciton">
+                            <button onClick={()=> edit('DeletAccount')} style={{backgroundColor: "#f51c1c"}}><PiTrashSimpleBold/>Deletar conta</button>
+                            <button onClick={() => edit('EditName')} style={{backgroundColor: "#0999bd"}}><PiPencilSimpleLineBold/> Editar Nome</button>
+                            <button onClick={() => edit('EditPassowrd')} style={{backgroundColor: "#eff31f"}}><PiShieldBold/> Editar Senha</button>
+                            <button  onClick={() => edit('EditAvatar')}style={{backgroundColor: "#09bd09"}}> <PiSmileyBold/> Editar Foto de perfil</button>
+                        </div>
                     </div>
-                    <div className="Funciton">
-                        <button onClick={()=> edit('DeletAccount')} style={{backgroundColor: "#f51c1c"}}><PiTrashSimpleBold/>Deletar conta</button>
-                        <button onClick={() => edit('EditName')} style={{backgroundColor: "#0999bd"}}><PiPencilSimpleLineBold/> Editar Nome</button>
-                        <button onClick={() => edit('EditPassowrd')} style={{backgroundColor: "#eff31f"}}><PiShieldBold/> Editar Senha</button>
-                        <button  id="BtnDisable" onClick={() => edit('profileImg')}style={{backgroundColor: "#09bd09"}}> <PiSmileyBold/> Editar Foto de perfil</button>
-                    </div>
-                </div>
+                )}
                 <div id="CloseEdit" onClick={()=> CloseEdit()}></div>
                 <div id="EditName" className="EditName">
                     <button onClick={CloseEdit} className="ClsoeBtn">X</button>
@@ -290,6 +302,29 @@ function ProfilePage(){
                     <span id="alertAccountDelet" style={{display: 'none'}}> <PiHandPalmBold/> <b>Email errado!</b></span>
                     <button onClick={()=> Delete()} className="DeletBtn">Deletar</button>
                 </div>  
+                <div id="EditAvatar" className="EditProfileImg">
+                    <button onClick={CloseEdit} className="ClsoeBtn">X</button>
+                    <h4 className="name">Escolha seu novo avatar!</h4>
+                    <div className="Options">
+                        <button onClick={()=> SelectAvatar('avatar_girl_01')}><img id="avatar_girl_01" alt="" src={require(`./../../profileIcons/avatar_girl_01.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_girl_02')}><img id="avatar_girl_02" alt="" src={require(`./../../profileIcons/avatar_girl_02.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_girl_03')}><img id="avatar_girl_03" alt="" src={require(`./../../profileIcons/avatar_girl_03.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_girl_04')}><img id="avatar_girl_04" alt="" src={require(`./../../profileIcons/avatar_girl_04.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_man_01')}><img  id="avatar_man_01" alt=""src={require(`./../../profileIcons/avatar_man_01.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_man_02')}><img id="avatar_man_02"  alt="" src={require(`./../../profileIcons/avatar_man_02.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_man_03')}><img id="avatar_man_03" alt="" src={require(`./../../profileIcons/avatar_man_03.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_man_04')}><img id="avatar_man_04"  alt="" src={require(`./../../profileIcons/avatar_man_04.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_man_05')}><img id="avatar_man_05" alt="" src={require(`./../../profileIcons/avatar_man_05.png`)} /></button>
+                        <button onClick={()=> SelectAvatar('avatar_man_06')}><img id="avatar_man_06" alt="" src={require(`./../../profileIcons/avatar_man_06.png`)} /></button>
+                    </div>
+                    <div className="OptionsSelect">
+                        <h3>Avatar Selecionado:</h3>
+                        <img alt="" id="DispleySelectAvatar"  src={require(`./../../profileIcons/avatar_man_06.png`)}/>
+                    </div>
+                    <div  className="BtnSave">
+                        <button onClick={()=> EditAvatar()} >Salvar</button>
+                    </div>
+                </div>
                 
             </div>
         </>
