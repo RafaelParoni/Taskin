@@ -265,9 +265,9 @@ function TasksPage(){
                     <p>Crie sua tarefa de acordo com os requisitos abaixo:</p>
                 </div>
                 <div className="NewTaskFormsName-Color">
-                    <input onChange={(e)=> setNameTask(e.target.value)} value={NameTask} name="name" className="NewTaskFormsInput" type="text" placeholder="Name Task..."/>
+                    <input onChange={(e)=> setNameTask(e.target.value)} maxLength={30} value={NameTask} name="name" className="NewTaskFormsInput" type="text" placeholder="Name Task..."/>
                     <div class="NewTaskFormsInputColor">
-                        <input id="input-color"  onChange={(e) => {setColorTask(e.target.value); NewTaskColorEdit(e.target.value)} }  class="NewTaskFormsinput-color" type="color"/>
+                        <input id="input-color"   onChange={(e) => {setColorTask(e.target.value); NewTaskColorEdit(e.target.value)} }  class="NewTaskFormsinput-color" type="color"/>
                     </div>
                 </div>
                 <span id="AlertNameOut"><PiSealWarningBold/> Coloque um Nome!</span>
