@@ -177,9 +177,10 @@ function TasksPage(){
         }
         console.log(`Maior Numero: ${maiorNum}`)
         var idTask =  maiorNum  + 1
-
+        
+        CreateTaskDiv()
         await setDoc(doc(db, UserInfo.id, idTask.toString()), tasks);
-
+        
         window.location.reload()
 
     }
@@ -280,9 +281,9 @@ function TasksPage(){
                     <button onClick={AdicionarTask}><PiPlusBold/></button>
                 </div>
             </div>
-            <div className="Tasks">
+            <div  className="Tasks">
                 <h4>Suas Taskins!</h4>
-                <div className="TasksList" onLoad={TasksListDisplay}>
+                <div id="taksListDisplay" className="TasksList" onLoad={TasksListDisplay}>
                     {TaskDispley}
                 </div>
 
