@@ -296,14 +296,42 @@
 .EditButton span:nth-child(2){
     display: none;
 }
+.EditColorButton {
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #f8f416;
+    border: none;
+    cursor: pointer;
+    display: flex;
+}
+.EditColorButton span:nth-child(2){
+    display: none;
+}
+
 
 .FunctionDetails button:hover {
     transition: 0.5s;
     box-shadow: 0px 0px 5px 1px #000;
 }
 
-
-
+.EditColorInput {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    border: solid 2px #ddd;
+    border-radius: 40px;
+}
+.EditColorInput-color {
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    width: 56px;
+    height: 56px;
+    border: none;
+}
 
 .AlertNoneTasks {
     text-align: center;

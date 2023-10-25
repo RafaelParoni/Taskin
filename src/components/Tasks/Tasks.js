@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 
 import './style.css'
-import {PiPenNibBold, PiNotePencilBold, PiPaintBrushBold, PiPlusBold, PiXBold, PiSealWarningBold, PiHandBold,  PiPlusCircleBold, PiCheckBold, PiTrashSimpleBold, PiCaretRightBold} from 'react-icons/pi'
+import {PiPenNibBold, PiNotePencilBold, PiPaintBrushBroadBold, PiPaintBrushBold, PiPlusBold, PiXBold, PiSealWarningBold, PiHandBold,  PiPlusCircleBold, PiCheckBold, PiTrashSimpleBold, PiCaretRightBold} from 'react-icons/pi'
 import Navbar from './../Navbar/Navbar'
 
 // Banco de dados
@@ -184,6 +184,37 @@ function TasksPage(){
         taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: NewDetails, stats: TaskSelect.stats, detailsHeight: TaskSelect.detailsHeight}
         await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
     }
+    async function EditColorTask(id){
+        var ColorInput = document.getElementById(`EditColorInput${id}`)
+        var StartIcon = document.getElementById(`StartEditColor${id}`)
+        var EndIcon = document.getElementById(`EndEditColor${id}`)
+
+        if(ColorInput.style.display !== 'flex'){
+            document.getElementById(`EditColorInput${id}`).style.display = 'flex'
+            StartIcon.style.display = 'none'
+            EndIcon.style.display = 'flex'
+
+        }else{
+            document.getElementById(`EditColorInput${id}`).style.display = 'none'
+            EndIcon.style.display = 'none'
+            StartIcon.style.display = 'flex'
+            const Tasks = await getDocs(TaskCollectionRef);
+            var TaskSelect = Tasks.docs.map((doc) => ({...doc.data(), id: doc.id}))
+            var taskEdit = ''
+            var i = 0
+            while(i < TaskSelect.length ){
+                if(TaskSelect[i].id === id){
+                    TaskSelect = {name: TaskSelect[i].name, stats: TaskSelect[i].stats, color: TaskSelect[i].color, details: TaskSelect[i].details, detailsHeight: TaskSelect[i].detailsHeight}
+                }
+                i++
+            }
+            var NewColor = document.getElementById(`input-color${id}`).value
+            taskEdit = {name: TaskSelect.name , color: NewColor, details: TaskSelect.details, stats: TaskSelect.stats, detailsHeight: TaskSelect.detailsHeight}
+            await setDoc(doc(db, UserInfo.id, id.toString()), taskEdit);
+            document.getElementById(`task${id}`).style.backgroundColor = NewColor + 'c5'
+        }
+
+    }
     
     function CreateTaskDiv(value){ // MONSTAR DIV PARA CRIAR UMA NOVA TASK
         if(value === 'create'){
@@ -272,6 +303,10 @@ function TasksPage(){
                             <div className="FunctionDetails">
                                 <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
                                 <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                <button className="EditColorButton" onClick={() => EditColorTask(Tasks[key].id) }><span id={`StartEditColor${Tasks[key].id}`}><PiPaintBrushBroadBold/></span> <span id={`EndEditColor${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                <div id={`EditColorInput${Tasks[key].id}`} className="EditColorInput">
+                                    <input id={`input-color${Tasks[key].id}`}  className="EditColorInput-color" type="color"/>
+                                </div>
                             </div>
                         </div>
                     </>
@@ -286,7 +321,7 @@ function TasksPage(){
     return (
         <>
         <Navbar/>
-        <div className="TaskPage" >
+        <div id="TaskPage" className="TaskPage" >
             <div className="main" id="ExemepleTaskDiv">
                 <div className="mainTitles">
                     <h1>Taskin <PiNotePencilBold/> </h1>
@@ -322,6 +357,7 @@ function TasksPage(){
                     <button onClick={AdicionarTask}><PiPlusBold/></button>
                 </div>
             </div>
+
             <div  className="Tasks">
                 <h4>Suas Taskins!</h4>
                 <div id="taksListDisplay" className="TasksList" onLoad={TasksListDisplay}>
