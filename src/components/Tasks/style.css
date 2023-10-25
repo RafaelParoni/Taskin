@@ -262,6 +262,10 @@
     cursor: pointer;
     display: flex;
 }
+.MarkButton:hover {
+    transition: 0.5s;
+    box-shadow: 0px 0px 5px 1px #000;
+}
 .DelButton {
     font-size: 20px;
     padding: 5px;
