@@ -125,8 +125,14 @@ function TasksPage(){
         var taskEdit = ''
         var i = 0
         while(i < TaskSelect.length ){
+            var ValuedDetailsHeight = '35px'
             if(TaskSelect[i].id === value){
-                TaskSelect = {name: TaskSelect[i].name, color: TaskSelect[i].color, details: TaskSelect[i].details}
+                if(TaskSelect[i].detailsHeight === undefined){
+                    ValuedDetailsHeight = '40px'
+                }else{
+                    ValuedDetailsHeight = TaskSelect[i].detailsHeight
+                }
+                TaskSelect = {name: TaskSelect[i].name, color: TaskSelect[i].color, details: TaskSelect[i].details, detailsHeight: ValuedDetailsHeight}
             }
             i++
         }
@@ -134,13 +140,13 @@ function TasksPage(){
         if(task.attributes.getNamedItem('class').value === ''){
             task.setAttribute('class' , 'ConfirmBtnCheck')
 
-            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: 'ConfirmBtnCheck'}
+            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: 'ConfirmBtnCheck', detailsHeight: TaskSelect.detailsHeight}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
           //  window.location.reload()
         }else{
             task.setAttribute('class', '' )
 
-            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: ''}
+            taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: '', detailsHeight: TaskSelect.detailsHeight}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
            // window.location.reload()
         }
