@@ -219,6 +219,40 @@
     --webkit-user-select: none;
 }
 
+.ConfirmBtnCheck {
+    text-decoration:line-through;
+}
+.TaskInfo  {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.TaskDetails {
+    display: none;
+    background-color: #919191c5;
+    width: 90%;
+    padding: 5px;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+.TaskDetails textarea {
+    width: 85%;
+    outline: none;
+    resize: none;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    color: #000;
+}
+.FunctionDetails {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: top;
+    width: 35px;
+    grid-gap: 5px
+}
+
 .MarkButton {
     font-size: 20px;
     padding: 5px;
@@ -237,34 +271,15 @@
     cursor: pointer;
     display: flex;
 }
-.TaskDiv button:hover {
+
+.FunctionDetails button:hover {
     transition: 0.5s;
     box-shadow: 0px 0px 5px 1px #000;
 }
-.ConfirmBtnCheck {
-    text-decoration:line-through;
-}
-.TaskInfo  {
-    width: 100%;
-    display: flex;
-    align-items: center;
-}
-.TaskDetails {
-    display: none;
-    background-color: #919191c5;
-    width: 90%;
-    padding: 5px;
-    border-radius: 5px;
-}
-.TaskDetails textarea {
-    width: 100%;
-    outline: none;
-    resize: none;
-    border: none;
-    border-radius: 15px;
-    padding: 10px;
-    color: #000;
-}
+
+
+
+
 .AlertNoneTasks {
     text-align: center;
 }

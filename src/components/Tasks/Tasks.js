@@ -233,11 +233,14 @@ function TasksPage(){
                     <>
                         <div style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
                                 <p id={Tasks[key].id} onClick={()=> OpenDetails(`TaskDetails${Tasks[key].id}`, `TaskIndicator${Tasks[key].id}`)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
-                                <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
-                                <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
                         </div>
                         <div className="TaskDetails"  id={`TaskDetails${Tasks[key].id}`} >
                             <textarea style={{height: Tasks[key].detailsHeight}} defaultValue={Details} disabled='true'  />  
+                            <div className="FunctionDetails">
+                                <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
+                                
+                                <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
+                            </div>
                         </div>
                     </>
                 )
