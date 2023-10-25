@@ -101,15 +101,21 @@ function TasksPage(){
     const [NameTask, setNameTask] = useState('')
     const [ColorTask, setColorTask] = useState('')
 
+    
     const textAreaRef = useRef(null);
     const [Val, setVal] = useState("");
+  
     const handleChange = (e) => {
         setVal(e.target.value);
     }
+
     useEffect(() => {
         textAreaRef.current.style.height = "25px";
         textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
     }, [Val])
+    
+    
+    
 
 
 
@@ -282,7 +288,7 @@ function TasksPage(){
                 </div>
                 <span id="AlertNameOut"><PiSealWarningBold/> Coloque um Nome!</span>
                 <div className="NewTaskFormsDscri">
-                    <textarea id="textereaDeatils"  wrap="hard" value={Val} ref={textAreaRef} onChange={handleChange} maxLength={2000}  placeholder="Escreva uma descrição da tarefa! - máximo de caracteres 2000" />
+                    <textarea id="textereaDeatils" wrap="hard" value={Val} ref={textAreaRef} onChange={handleChange}  maxLength={2000}  placeholder="Escreva uma descrição da tarefa! - máximo de caracteres 2000" />
                 </div>
                 <span id="AlertDescriOut"><PiSealWarningBold/> Coloque uma descrição!</span>
                 <div className="NewTaskButtons"> 
