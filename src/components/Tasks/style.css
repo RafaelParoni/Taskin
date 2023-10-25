@@ -284,6 +284,18 @@
     cursor: pointer;
     display: flex;
 }
+.EditButton {
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #00aeff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+}
+.EditButton span:nth-child(2){
+    display: none;
+}
 
 .FunctionDetails button:hover {
     transition: 0.5s;

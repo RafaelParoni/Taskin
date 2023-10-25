@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 
 import './style.css'
-import {PiPenNibBold, PiNotePencilBold, PiPlusBold, PiXBold, PiSealWarningBold, PiHandBold,  PiPlusCircleBold, PiCheckBold, PiTrashSimpleBold, PiCaretRightBold} from 'react-icons/pi'
+import {PiPenNibBold, PiNotePencilBold, PiPaintBrushBold, PiPlusBold, PiXBold, PiSealWarningBold, PiHandBold,  PiPlusCircleBold, PiCheckBold, PiTrashSimpleBold, PiCaretRightBold} from 'react-icons/pi'
 import Navbar from './../Navbar/Navbar'
 
 // Banco de dados
@@ -157,6 +157,33 @@ function TasksPage(){
            // window.location.reload()
         }
     }
+    async function EditTask(value){
+        var textarea = document.getElementById(`textarea${value}`)
+        var StartIcon = document.getElementById(`StartEditTexteare${value}`)
+        var EndIcon = document.getElementById(`EndEditTexteare${value}`)
+        if(textarea.hasAttribute('disabled')){
+            textarea.removeAttribute('disabled')
+            StartIcon.style.display = 'none'
+            EndIcon.style.display = 'flex'
+        }else{
+            textarea.setAttribute('disabled', 'true')
+            StartIcon.style.display = 'flex'
+            EndIcon.style.display = 'none'
+        }
+        const Tasks = await getDocs(TaskCollectionRef);
+        var TaskSelect = Tasks.docs.map((doc) => ({...doc.data(), id: doc.id}))
+        var taskEdit = ''
+        var i = 0
+        while(i < TaskSelect.length ){
+            if(TaskSelect[i].id === value){
+                TaskSelect = {name: TaskSelect[i].name, stats: TaskSelect[i].stats, color: TaskSelect[i].color, details: TaskSelect[i].details, detailsHeight: TaskSelect[i].detailsHeight}
+            }
+            i++
+        }
+        var NewDetails = textarea.value
+        taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: NewDetails, stats: TaskSelect.stats, detailsHeight: TaskSelect.detailsHeight}
+        await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
+    }
     
     function CreateTaskDiv(value){ // MONSTAR DIV PARA CRIAR UMA NOVA TASK
         if(value === 'create'){
@@ -211,7 +238,6 @@ function TasksPage(){
         }
     }
 
- 
     function TasksListDisplay(){
         TaskDispley = []
         if(TaskDispley.length !== 0){
@@ -233,7 +259,7 @@ function TasksPage(){
                 if(Tasks[key].details === '' || Tasks[key].details === undefined){
                     Details = 'Parece que você não colocou nenhum detalhe na hora de criar sua Taskin :('
                 }else {
-                    Details = Tasks[key].details
+                    Details = Tasks[key].details 
                 }
                 TaskDispley.push(
                     <>
@@ -242,10 +268,10 @@ function TasksPage(){
                                 <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
                         </div>
                         <div className="TaskDetails"  id={`TaskDetails${Tasks[key].id}`} >
-                            <textarea style={{height: Tasks[key].detailsHeight}} defaultValue={Details} disabled='true'  />  
+                            <textarea id={`textarea${Tasks[key].id}`} style={{height: Tasks[key].detailsHeight}} defaultValue={Details} disabled={true}  />  
                             <div className="FunctionDetails">
                                 <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
-                            
+                                <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
                             </div>
                         </div>
                     </>
@@ -282,8 +308,8 @@ function TasksPage(){
                 </div>
                 <div className="NewTaskFormsName-Color">
                     <input onChange={(e)=> setNameTask(e.target.value)} maxLength={30} value={NameTask} name="name" className="NewTaskFormsInput" type="text" placeholder="Name Task..."/>
-                    <div class="NewTaskFormsInputColor">
-                        <input id="input-color"   onChange={(e) => {setColorTask(e.target.value); NewTaskColorEdit(e.target.value)} }  class="NewTaskFormsinput-color" type="color"/>
+                    <div className="NewTaskFormsInputColor">
+                        <input id="input-color"   onChange={(e) => {setColorTask(e.target.value); NewTaskColorEdit(e.target.value)} }  className="NewTaskFormsinput-color" type="color"/>
                     </div>
                 </div>
                 <span id="AlertNameOut"><PiSealWarningBold/> Coloque um Nome!</span>
