@@ -234,17 +234,40 @@
     display: flex;
     align-items: center;
 }
-.TaskDetails {
+
+.TaskDetailsSmall {
     display: none;
     background-color: #919191c5;
     width: 90%;
+    height: auto;
     max-height: 300px;
-    overflow-y: auto;
+    overflow-y: hidden;
+    padding: 5px;
+    border-radius: 5px;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.TaskDetailsSmall textarea {
+    width: auto;
+    outline: none;
+    resize: none;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    color: #000;
+}
+.TaskDetailsLarge {
+    display: none;
+    background-color: #919191c5;
+    width: 90%;
+    height: auto;
+    max-height: 300px;
+    overflow-y: hidden;
     padding: 5px;
     border-radius: 5px;
     justify-content: space-between;
 }
-.TaskDetails textarea {
+.TaskDetailsLarge textarea {
     width: 85%;
     outline: none;
     resize: none;
@@ -253,13 +276,31 @@
     padding: 10px;
     color: #000;
 }
-.FunctionDetails {
+.FunctionDetailsSmall {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    grid-gap: 5px
+}
+.FunctionDetailsSmall button:hover {
+    transition: 0.5s;
+    box-shadow: 0px 0px 5px 1px #000;
+}
+.FunctionDetailsLarge {
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: top;
     width: 35px;
     grid-gap: 5px
+}
+
+.FunctionDetailsLarge button:hover {
+    transition: 0.5s;
+    box-shadow: 0px 0px 5px 1px #000;
 }
 
 .MarkButton {
@@ -310,10 +351,6 @@
 }
 
 
-.FunctionDetails button:hover {
-    transition: 0.5s;
-    box-shadow: 0px 0px 5px 1px #000;
-}
 
 .EditColorInput {
     display: none;

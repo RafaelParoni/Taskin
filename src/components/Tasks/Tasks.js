@@ -101,6 +101,7 @@ function TasksPage(){
     const [NameTask, setNameTask] = useState('')
     const [ColorTask, setColorTask] = useState('')
 
+
     
     const textAreaRef = useRef(null);
     const [Val, setVal] = useState("");
@@ -113,9 +114,6 @@ function TasksPage(){
         textAreaRef.current.style.height = "25px";
         textAreaRef.current.style.height = textAreaRef.current.scrollHeight + "px";
     }, [Val])
-    
-    
-    
 
 
 
@@ -215,7 +213,6 @@ function TasksPage(){
         }
 
     }
-    
     function CreateTaskDiv(value){ // MONSTAR DIV PARA CRIAR UMA NOVA TASK
         if(value === 'create'){
             document.getElementById('CreateTaskDiv').style.display = 'flex'
@@ -254,21 +251,24 @@ function TasksPage(){
         window.location.reload()
 
     }
-    function OpenDetails(DetailsId, IndicadorId){
-        var Indicador = document.getElementById(IndicadorId)
-        var Details = document.getElementById(DetailsId)
-        if(Details.style.display === ''){
+    function OpenDetails(id){
+        var Indicador = document.getElementById(`TaskIndicator${id}`)
+        var Details = document.getElementById(`TaskDetails${id}`)
+        var task = document.getElementById(`task${id}`)
+        if(task.attributes.getNamedItem('value').nodeValue === 'close'){
             Indicador.style.rotate = '90deg'
             Details.style.display = 'flex'
-        }else if(Details.style.display === 'none'){
+            task.attributes.getNamedItem('value').nodeValue = 'open'
+        }else if(task.attributes.getNamedItem('value').nodeValue === 'close'){
             Indicador.style.rotate = '90deg'
             Details.style.display = 'flex'
+            task.attributes.getNamedItem('value').nodeValue = 'open'
         }else{
-            Indicador.style.rotate = '0deg'
             Details.style.display = 'none'
+            Indicador.style.rotate = '0deg'
+            task.attributes.getNamedItem('value').nodeValue = 'close'
         }
     }
-
     function TasksListDisplay(){
         TaskDispley = []
         if(TaskDispley.length !== 0){
@@ -292,25 +292,56 @@ function TasksPage(){
                 }else {
                     Details = Tasks[key].details 
                 }
-                TaskDispley.push(
-                    <>
-                        <div style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
-                                <p id={Tasks[key].id} onClick={()=> OpenDetails(`TaskDetails${Tasks[key].id}`, `TaskIndicator${Tasks[key].id}`)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
-                                <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
-                        </div>
-                        <div className="TaskDetails"  id={`TaskDetails${Tasks[key].id}`} >
-                            <textarea id={`textarea${Tasks[key].id}`} style={{height: Tasks[key].detailsHeight}} defaultValue={Details} disabled={true}  />  
-                            <div className="FunctionDetails">
-                                <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
-                                <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
-                                <button className="EditColorButton" onClick={() => EditColorTask(Tasks[key].id) }><span id={`StartEditColor${Tasks[key].id}`}><PiPaintBrushBroadBold/></span> <span id={`EndEditColor${Tasks[key].id}`}><PiCheckBold/></span></button>
-                                <div id={`EditColorInput${Tasks[key].id}`} className="EditColorInput">
-                                    <input id={`input-color${Tasks[key].id}`}  className="EditColorInput-color" type="color"/>
+
+                var CortarPx = ''
+                var DetailsHeig = Tasks[key].detailsHeight
+                CortarPx = Tasks[key].detailsHeight
+                CortarPx = CortarPx.indexOf('px')
+                DetailsHeig = DetailsHeig.slice(0, CortarPx)
+                if(DetailsHeig < 100){
+                    console.log(Tasks[key].name + ' menor')
+                    TaskDispley.push(
+                        <>
+                            <div  value='close' style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
+                                    <p id={Tasks[key].id} onClick={()=> OpenDetails(Tasks[key].id)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
+                                    <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
+                            </div>
+                            <div className="TaskDetailsSmall"  id={`TaskDetails${Tasks[key].id}`} >
+                                <textarea id={`textarea${Tasks[key].id}`} style={{height: Tasks[key].detailsHeight}} placeholder={Details} defaultValue={Details} disabled={true}  />  
+                                <div className="FunctionDetailsSmall">
+                                    <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
+                                    <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                    <button className="EditColorButton" onClick={() => EditColorTask(Tasks[key].id) }><span id={`StartEditColor${Tasks[key].id}`}><PiPaintBrushBroadBold/></span> <span id={`EndEditColor${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                    <div id={`EditColorInput${Tasks[key].id}`} className="EditColorInput">
+                                        <input id={`input-color${Tasks[key].id}`}  className="EditColorInput-color" type="color"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </>
-                )
+                        </>
+                    )
+                }else{
+                    console.log(Tasks[key].name + ' maior')
+                    TaskDispley.push(
+                        <>
+                            <div  value='close' style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
+                                    <p id={Tasks[key].id} onClick={()=> OpenDetails(Tasks[key].id)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
+                                    <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
+                            </div>
+                            <div className="TaskDetailsLarge"  id={`TaskDetails${Tasks[key].id}`} >
+                                <textarea id={`textarea${Tasks[key].id}`} style={{height: Tasks[key].detailsHeight}} placeholder={Details} defaultValue={Details} disabled={true}  />  
+                                <div className="FunctionDetailsLarge">
+                                    <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
+                                    <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                    <button className="EditColorButton" onClick={() => EditColorTask(Tasks[key].id) }><span id={`StartEditColor${Tasks[key].id}`}><PiPaintBrushBroadBold/></span> <span id={`EndEditColor${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                    <div id={`EditColorInput${Tasks[key].id}`} className="EditColorInput">
+                                        <input id={`input-color${Tasks[key].id}`}  className="EditColorInput-color" type="color"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )
+                }
+                
     
             }
         }
@@ -357,7 +388,6 @@ function TasksPage(){
                     <button onClick={AdicionarTask}><PiPlusBold/></button>
                 </div>
             </div>
-
             <div  className="Tasks">
                 <h4>Suas Taskins!</h4>
                 <div id="taksListDisplay" className="TasksList" onLoad={TasksListDisplay}>
