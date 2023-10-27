@@ -175,6 +175,14 @@
     padding: 5px;
     color: #ff0000;
 }
+.TaskBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    grid-gap: 5px;
+}
 .Tasks {
     margin-top: 5px;
     width: min(500px, 80vw);
@@ -225,6 +233,7 @@
     font-size: 20px;
     width: 95%;
     cursor: pointer;
+    z-index: 0;
 }
 .TaskDiv p::selection {
     --webkit-user-select: none;
@@ -374,4 +383,51 @@
     color: #000;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.FilterTasks {
+    width: 90%;
+}
+.FilterTasks button{
+    border-radius: 5px;
+    border: 1px solid #000;
+    cursor: pointer;
+    padding: 5px;
+    font-size: larger;
+}
+
+.FilterTasks button:hover {
+    transition: 0.4s;
+    box-shadow: 0 0 5px 1px #000;
+}
+.FilterTasks button:hover ~ .FiltersType {
+    visibility: visible;
+    opacity: 1;
+}
+.FiltersType:hover{
+    visibility: visible;
+    opacity: 1;
+}
+.FilterTasks button:focus ~ .FiltersType {
+    visibility: visible;
+    opacity: 1;
+}
+.FiltersType:focus{
+    visibility: visible;
+    opacity: 1;
+}
+
+.FiltersType {
+    z-index: 2;
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #ddddddd0;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    grid-gap: 2px;
 }

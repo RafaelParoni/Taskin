@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react"
 
 import './style.css'
-import {PiPenNibBold, PiNotePencilBold, PiPaintBrushBroadBold, PiPaintBrushBold, PiPlusBold, PiXBold, PiSealWarningBold, PiHandBold,  PiPlusCircleBold, PiCheckBold, PiTrashSimpleBold, PiCaretRightBold} from 'react-icons/pi'
+import {PiPenNibBold, PiNotePencilBold, PiFunnelBold, PiPaintBrushHouseholdBold, PiPaintBrushBroadBold, PiPaintBrushBold, PiPlusBold, PiXBold, PiSealWarningBold, PiHandBold,  PiPlusCircleBold, PiCheckBold, PiTrashSimpleBold, PiCaretRightBold} from 'react-icons/pi'
 import Navbar from './../Navbar/Navbar'
 
 // Banco de dados
@@ -124,6 +124,7 @@ function TasksPage(){
 
     async function MarkTask(value){ // MARCAR TASK 
         var task = document.getElementById(value)
+        var taskBox  = document.getElementById(`TaskBox${value}`)
         const Tasks = await getDocs(TaskCollectionRef);
         var TaskSelect = Tasks.docs.map((doc) => ({...doc.data(), id: doc.id}))
         var taskEdit = ''
@@ -143,12 +144,14 @@ function TasksPage(){
         
         if(task.attributes.getNamedItem('class').value === ''){
             task.setAttribute('class' , 'ConfirmBtnCheck')
+            taskBox.setAttribute('value', 'ConfirmBtnCheck')
 
             taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: 'ConfirmBtnCheck', detailsHeight: TaskSelect.detailsHeight}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
           //  window.location.reload()
         }else{
             task.setAttribute('class', '' )
+            taskBox.setAttribute('value', '')
 
             taskEdit = {name: TaskSelect.name , color: TaskSelect.color, details: TaskSelect.details, stats: '', detailsHeight: TaskSelect.detailsHeight}
             await setDoc(doc(db, UserInfo.id, value.toString()), taskEdit);
@@ -294,8 +297,8 @@ function TasksPage(){
                 }
 
                 TaskDispley.push(
-                    <>
-                        <div  value='close' style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
+                    <div value={`${status}`} id={`TaskBox${Tasks[key].id}`} className="TaskBox">
+                        <div   value='close' style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
                                 <p id={Tasks[key].id} onClick={()=> OpenDetails(Tasks[key].id)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
                                 <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
                         </div>
@@ -310,7 +313,7 @@ function TasksPage(){
                                 </div>
                              </div>
                         </div>
-                    </>
+                    </div>
                 )
                 
                 
@@ -319,6 +322,33 @@ function TasksPage(){
         }
     }
     TasksListDisplay()
+
+   function FilterTaskList(filter){
+        var TasksBox = document.querySelectorAll('.TaskBox')
+        if(filter === 'completed'){ 
+            for (let key = 0; key < TasksBox.length; key++) {
+                if(TasksBox[key].getAttribute('value') === ''){
+                    TasksBox[key].style.display = 'none'
+                }
+                if(TasksBox[key].getAttribute('value') === 'ConfirmBtnCheck'){
+                    TasksBox[key].style.display = 'flex'
+                }
+            }
+        }else if(filter === 'incompleted'){
+            for (let key = 0; key < TasksBox.length; key++) {
+                if(TasksBox[key].getAttribute('value') === 'ConfirmBtnCheck'){
+                    TasksBox[key].style.display = 'none'
+                }
+                if(TasksBox[key].getAttribute('value') === ''){
+                    TasksBox[key].style.display = 'flex'
+                }
+            }
+        }else if(filter === 'clear'){
+            for (let key = 0; key < TasksBox.length; key++) {
+                TasksBox[key].style.display = 'flex' 
+            }
+        }
+   }
 
     
     return (
@@ -362,7 +392,15 @@ function TasksPage(){
             </div>
             <div  className="Tasks">
                 <h4>Suas Taskins!</h4>
-                <div id="taksListDisplay" className="TasksList" onLoad={TasksListDisplay}>
+                <div id="taksListDisplay" className="TasksList" >
+                    <div className="FilterTasks">
+                        <button style={{backgroundColor: '#0d98d8c5'}}><PiFunnelBold/></button>
+                        <div className="FiltersType">
+                            <button  style={{backgroundColor: '#05cf7bc5'}} onClick={()=> FilterTaskList('completed')}> <PiCheckBold/> Completa</button>
+                            <button  style={{backgroundColor: '#cf050fc5'}}   onClick={()=> FilterTaskList('incompleted')}> <PiXBold/> Incompletos</button>
+                            <button  style={{backgroundColor: '#e4d506c5'}}  onClick={()=> FilterTaskList('clear')}><PiPaintBrushHouseholdBold/> Limpar</button>
+                        </div>
+                    </div>
                     {TaskDispley}
                 </div>
 
