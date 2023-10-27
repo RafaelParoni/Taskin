@@ -293,54 +293,26 @@ function TasksPage(){
                     Details = Tasks[key].details 
                 }
 
-                var CortarPx = ''
-                var DetailsHeig = Tasks[key].detailsHeight
-                CortarPx = Tasks[key].detailsHeight
-                CortarPx = CortarPx.indexOf('px')
-                DetailsHeig = DetailsHeig.slice(0, CortarPx)
-                if(DetailsHeig < 100){
-                    console.log(Tasks[key].name + ' menor')
-                    TaskDispley.push(
-                        <>
-                            <div  value='close' style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
-                                    <p id={Tasks[key].id} onClick={()=> OpenDetails(Tasks[key].id)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
-                                    <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
-                            </div>
-                            <div className="TaskDetailsSmall"  id={`TaskDetails${Tasks[key].id}`} >
-                                <textarea id={`textarea${Tasks[key].id}`} style={{height: Tasks[key].detailsHeight}} placeholder={Details} defaultValue={Details} disabled={true}  />  
-                                <div className="FunctionDetailsSmall">
-                                    <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
-                                    <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
-                                    <button className="EditColorButton" onClick={() => EditColorTask(Tasks[key].id) }><span id={`StartEditColor${Tasks[key].id}`}><PiPaintBrushBroadBold/></span> <span id={`EndEditColor${Tasks[key].id}`}><PiCheckBold/></span></button>
-                                    <div id={`EditColorInput${Tasks[key].id}`} className="EditColorInput">
-                                        <input id={`input-color${Tasks[key].id}`}  className="EditColorInput-color" type="color"/>
-                                    </div>
+                TaskDispley.push(
+                    <>
+                        <div  value='close' style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
+                                <p id={Tasks[key].id} onClick={()=> OpenDetails(Tasks[key].id)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
+                                <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
+                        </div>
+                        <div className="TaskDetails"  id={`TaskDetails${Tasks[key].id}`} >
+                            <textarea id={`textarea${Tasks[key].id}`} style={{height: Tasks[key].detailsHeight}} placeholder={Details} defaultValue={Details} disabled={true}  />  
+                            <div className="FunctionDetails">
+                                <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
+                                <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                <button className="EditColorButton" onClick={() => EditColorTask(Tasks[key].id) }><span id={`StartEditColor${Tasks[key].id}`}><PiPaintBrushBroadBold/></span> <span id={`EndEditColor${Tasks[key].id}`}><PiCheckBold/></span></button>
+                                <div id={`EditColorInput${Tasks[key].id}`} className="EditColorInput">
+                                    <input id={`input-color${Tasks[key].id}`}  className="EditColorInput-color" type="color"/>
                                 </div>
-                            </div>
-                        </>
-                    )
-                }else{
-                    console.log(Tasks[key].name + ' maior')
-                    TaskDispley.push(
-                        <>
-                            <div  value='close' style={{backgroundColor: `${Tasks[key].color}c5`}} className="TaskDiv" id={`task${Tasks[key].id}`}>
-                                    <p id={Tasks[key].id} onClick={()=> OpenDetails(Tasks[key].id)} className={status} > <span id={`TaskIndicator${Tasks[key].id}`}><PiCaretRightBold/></span> {Tasks[key].name} </p>
-                                    <button className="MarkButton" onClick={() => MarkTask(Tasks[key].id)}><PiCheckBold/></button>
-                            </div>
-                            <div className="TaskDetailsLarge"  id={`TaskDetails${Tasks[key].id}`} >
-                                <textarea id={`textarea${Tasks[key].id}`} style={{height: Tasks[key].detailsHeight}} placeholder={Details} defaultValue={Details} disabled={true}  />  
-                                <div className="FunctionDetailsLarge">
-                                    <button className="DelButton" onClick={() => DeleteTask(Tasks[key].id)}><PiTrashSimpleBold/></button>
-                                    <button className="EditButton" onClick={() => EditTask(Tasks[key].id)}><span id={`StartEditTexteare${Tasks[key].id}`}><PiPaintBrushBold/></span> <span id={`EndEditTexteare${Tasks[key].id}`}><PiCheckBold/></span></button>
-                                    <button className="EditColorButton" onClick={() => EditColorTask(Tasks[key].id) }><span id={`StartEditColor${Tasks[key].id}`}><PiPaintBrushBroadBold/></span> <span id={`EndEditColor${Tasks[key].id}`}><PiCheckBold/></span></button>
-                                    <div id={`EditColorInput${Tasks[key].id}`} className="EditColorInput">
-                                        <input id={`input-color${Tasks[key].id}`}  className="EditColorInput-color" type="color"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </>
-                    )
-                }
+                             </div>
+                        </div>
+                    </>
+                )
+                
                 
     
             }
