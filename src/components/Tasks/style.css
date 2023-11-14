@@ -222,7 +222,8 @@
     background-color: #919191c5;
     border-radius: 5px;
     padding-inline: 5px;
-    grid-gap: 5px
+    grid-gap: 5px;
+
 }
 .TaskDiv:hover{
     transition: 0.2s;
@@ -237,7 +238,7 @@
     margin: 5px;
     width: 95%;
     cursor: pointer;
-    z-index: 0;
+
 }
 .TaskDiv p::selection {
     --webkit-user-select: none;

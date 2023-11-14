@@ -55,7 +55,7 @@ function TasksPage(){
             
         }else{BuscarInfoUser()}
     }
-    setTimeout(BuscarUsers, 100)
+    setTimeout(BuscarUsers, 10)
     async function BuscarInfoUser(){
         var i = 0
         while(i < userss.length){
