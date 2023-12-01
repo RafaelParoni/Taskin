@@ -2,9 +2,10 @@
 import { initializeApp } from "firebase/app";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import bcrypt from "bcryptjs-react";
+import { FIRE_BASE_KEY } from "../keys/importKeys";
 
 const firebaseApp = initializeApp({
-  apiKey: "AIzaSyCBBq1IMmZ_X-PdVaUlmLNr6kqOFXQQQ54",
+  apiKey: FIRE_BASE_KEY,
   authDomain: "reactfirebase-664f2.firebaseapp.com",
   projectId: "reactfirebase-664f2",
   storageBucket: "reactfirebase-664f2.appspot.com",

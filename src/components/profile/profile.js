@@ -10,8 +10,10 @@ import {PiProhibitBold, PiArrowCounterClockwiseBold, PiPencilSimpleLineBold, PiS
 import { initializeApp   } from "firebase/app";
 import {collection, getDocs, getFirestore, setDoc, doc, deleteDoc  } from "firebase/firestore";
 
+import { FIRE_BASE_KEY } from "../keys/importKeys";
+
 const firebaseApp = initializeApp({
-  apiKey: "AIzaSyCBBq1IMmZ_X-PdVaUlmLNr6kqOFXQQQ54",
+  apiKey: FIRE_BASE_KEY,
   authDomain: "reactfirebase-664f2.firebaseapp.com",
   projectId: "reactfirebase-664f2",
   storageBucket: "reactfirebase-664f2.appspot.com",
